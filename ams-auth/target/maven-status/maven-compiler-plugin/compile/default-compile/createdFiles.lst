@@ -1,0 +1,10 @@
+com\ams\auth\comm\enums\PasswordEncoderTypeEnum.class
+com\ams\auth\controller\AuthController.class
+com\ams\auth\security\details\client\ClientDetailsServiceImpl.class
+com\ams\auth\AuthApp.class
+com\ams\auth\security\config\AuthorizationServerConfig.class
+com\ams\auth\security\config\WebSecurityConfig.class
+com\ams\auth\security\details\user\SysUserDetails.class
+com\ams\auth\comm\exception\AuthExceptionHandler.class
+com\ams\auth\security\details\user\SysUserDetails$SysUserDetailsBuilder.class
+com\ams\auth\security\details\user\SysUserDetailsServiceImpl.class

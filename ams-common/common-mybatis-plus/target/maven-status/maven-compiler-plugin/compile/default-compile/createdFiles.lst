@@ -1,0 +1,2 @@
+com\ams\common\mybatis\config\MybatisPlusConfig.class
+com\ams\common\mybatis\handler\MyMetaObjectHandler.class

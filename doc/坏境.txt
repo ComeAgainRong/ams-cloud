@@ -1,0 +1,32 @@
+mkdir -p /home/centos/data/docker/redis/conf
+docker run -p 6379:6379 --name redis -v /home/centos/data/docker/redis/conf/redis.conf:/etc/redis/redis.conf -v /home/centos/data/docker/redis/data:/data -d redis redis-server /etc/redis/redis.conf --appendonly yes
+
+
+mkdir -p /home/centos/data/docker/mysql/conf
+
+
+docker run -p 3306:3306 --name mysql \
+ -v /home/centos/data/docker/mysql/log:/var/log/mysql \
+ -v /home/centos/data/docker/mysql/data:/var/lib/mysql \
+ -v /home/centos/data/docker/mysql/conf:/etc/mysql \
+ -e MYSQL_ROOT_PASSWORD=root \
+ -d mysql:5.7
+
+mkdir -p  /home/centos/data/docker/nacos/init.d/
+
+vim /home/centos/data/docker/nacos/init.d/custom.properties
+
+
+docker  run \
+--name nacos -d \
+-p 8848:8848 \
+--privileged=true \
+--restart=always \
+--link mysql:mysql \
+-e JVM_XMS=256m \
+-e JVM_XMX=256m \
+-e MODE=standalone \
+-e PREFER_HOST_MODE=hostname \
+-v /home/centos/data/docker/nacos/logs:/home/nacos/logs \
+-v /home/centos/data/docker/nacos/init.d/custom.properties:/home/nacos/init.d/custom.properties \
+nacos/nacos-server

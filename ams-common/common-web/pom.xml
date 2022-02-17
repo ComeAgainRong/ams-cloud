@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ams-common</artifactId>
+        <groupId>com.ams</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>common-web</artifactId>
+
+   <dependencies>
+       <dependency>
+           <groupId>com.ams</groupId>
+           <artifactId>common-base</artifactId>
+           <version>${ams.version}</version>
+       </dependency>
+
+       <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-web</artifactId>
+       </dependency>
+
+       <dependency>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-starter-aop</artifactId>
+           <optional>true</optional>
+       </dependency>
+       <dependency>
+           <groupId>io.github.openfeign</groupId>
+           <artifactId>feign-core</artifactId>
+       </dependency>
+
+       <dependency>
+           <groupId>io.github.openfeign</groupId>
+           <artifactId>feign-httpclient</artifactId>
+       </dependency>
+
+       <dependency>
+           <groupId>com.nimbusds</groupId>
+           <artifactId>nimbus-jose-jwt</artifactId>
+       </dependency>
+   </dependencies>
+</project>
