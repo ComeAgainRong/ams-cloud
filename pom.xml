@@ -11,6 +11,7 @@
         <module>ams-common</module>
         <module>ams-auth</module>
         <module>ams_admin</module>
+        <module>ams-gateway</module>
     </modules>
 
     <parent>

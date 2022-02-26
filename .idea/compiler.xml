@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ams-auth" />
         <module name="common-mybatis-plus" />
+        <module name="ams-gateway" />
         <module name="admin_api" />
         <module name="common-web" />
         <module name="admin-boot" />
@@ -22,6 +23,7 @@
       <module name="admin_api" options="-parameters" />
       <module name="ams-auth" options="-parameters" />
       <module name="ams-common" options="-parameters" />
+      <module name="ams-gateway" options="-parameters" />
       <module name="ams_admin" options="-parameters" />
       <module name="common-base" options="-parameters" />
       <module name="common-mybatis-plus" options="-parameters" />

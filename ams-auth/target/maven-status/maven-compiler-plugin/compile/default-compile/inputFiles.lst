@@ -1,9 +1,9 @@
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\comm\enums\PasswordEncoderTypeEnum.java
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\comm\exception\AuthExceptionHandler.java
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\details\client\ClientDetailsServiceImpl.java
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\details\user\SysUserDetailsServiceImpl.java
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\controller\AuthController.java
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\config\WebSecurityConfig.java
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\details\user\SysUserDetails.java
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\AuthApp.java
-C:\Users\whisper\Desktop\itveteranjieorgloryofitem\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\config\AuthorizationServerConfig.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\controller\AuthController.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\config\WebSecurityConfig.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\comm\exception\AuthExceptionHandler.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\details\user\SysUserDetails.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\config\AuthorizationServerConfig.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\details\client\ClientDetailsServiceImpl.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\security\details\user\SysUserDetailsServiceImpl.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\comm\enums\PasswordEncoderTypeEnum.java
+E:\XiaoRong\Project(back end)\ams-cloud\ams-auth\src\main\java\com\ams\auth\AuthApp.java

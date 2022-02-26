@@ -1,5 +1,6 @@
 com\ams\admin\api\OAuthClientFeignClient.class
 com\ams\admin\dto\UserAuthDTO.class
+com\ams\admin\api\PasswdFeignClient.class
 com\ams\admin\dto\OAuth2ClientDTO.class
 com\ams\admin\dto\RolePermissionDTO.class
 com\ams\admin\api\UserFeignClient.class
