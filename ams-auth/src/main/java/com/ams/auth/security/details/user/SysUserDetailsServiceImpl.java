@@ -67,6 +67,7 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
         for (String role : roles) {
             authorities.add(new SimpleGrantedAuthority(role));
+            log.info(role);
         }
         return authorities;
     }

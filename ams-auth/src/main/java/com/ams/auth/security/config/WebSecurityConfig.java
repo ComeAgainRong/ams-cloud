@@ -1,10 +1,16 @@
 package com.ams.auth.security.config;
 
+import cn.hutool.json.JSONUtil;
+import com.ams.common.result.R;
+import com.ams.common.result.ResultCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
  * @ClassName : { WebSecurityConfig }
@@ -24,19 +31,20 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Slf4j
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
  private final UserDetailsService sysUserDetailsService;
  private final String realName = "";
 
  @Override
  protected void configure(HttpSecurity http) throws Exception {
-  http.authorizeRequests().antMatchers("/oauth/**").permitAll()
+  http
+          .authorizeRequests().antMatchers("/oauth/**").permitAll()
           .anyRequest().authenticated()
           .and()
           .httpBasic()
           .and()
           .csrf().disable()
-          //.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint())
-          ;
+          .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint());
  }
 
  /**
@@ -45,10 +53,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   * @return
   * @throws Exception
   */
+ @Override
  @Bean
-  public AuthenticationManager authenticationManagerBean() throws Exception {
-    return super.authenticationManagerBean();
-  }
+ public AuthenticationManager authenticationManagerBean() throws Exception {
+  return super.authenticationManagerBean();
+ }
 
  /**
   * 添加自定义认证器
@@ -82,7 +91,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
  /**
   * 自定义认证异常响应数据
   */
-/* @Bean
+ @Bean
  public AuthenticationEntryPoint authenticationEntryPoint() {
   return (request, response, e) -> {
    if (e instanceof InsufficientAuthenticationException){
@@ -98,6 +107,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     response.getWriter().flush();
    }
   };
- }*/
+ }
 
 }

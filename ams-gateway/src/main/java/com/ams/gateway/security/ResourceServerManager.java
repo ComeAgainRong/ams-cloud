@@ -45,7 +45,8 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
     @Override
     public Mono<AuthorizationDecision> check(Mono<Authentication> mono, AuthorizationContext authorizationContext) {
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();
-        if (request.getMethod() == HttpMethod.OPTIONS) { // 预检请求放行
+        // 预检请求放行
+        if (request.getMethod() == HttpMethod.OPTIONS) {
             return Mono.just(new AuthorizationDecision(true));
         }
         PathMatcher pathMatcher = new AntPathMatcher();
@@ -58,7 +59,9 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
         }
 
         // 如果token为空 或者token不合法 则进行拦截
-        String restfulPath = method + ":" + path; // RESTFul接口权限设计 @link https://www.cnblogs.com/haoxianrui/p/14961707.html
+        // RESTFul接口权限设计 @link https://www.cnblogs.com/haoxianrui/p/14961707.html
+        String restfulPath = method + ":" + path;
+
         String token = request.getHeaders().getFirst(SecurityConstants.AUTHORIZATION_KEY);
         if (StrUtil.isBlank(token) || !StrUtil.startWithIgnoreCase(token, SecurityConstants.JWT_PREFIX)) {
             return Mono.just(new AuthorizationDecision(false));
@@ -66,16 +69,21 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
 
         // 从redis中获取资源权限
         Map<String, Object> urlPermRolesRules = redisTemplate.opsForHash().entries(GlobalConstants.URL_PERM_ROLES_KEY);
-        List<String> authorizedRoles = new ArrayList<>(); // 拥有访问权限的角色
-        boolean requireCheck = false; // 是否需要鉴权，默认未设置拦截规则不需鉴权
+        // 拥有访问权限的角色
+        List<String> authorizedRoles = new ArrayList<>();
+        // 是否需要鉴权，默认未设置拦截规则不需鉴权
+        boolean requireCheck = false;
 
         // 获取当前资源 所需要的角色
         for (Map.Entry<String, Object> permRoles : urlPermRolesRules.entrySet()) {
             String perm = permRoles.getKey();
+            log.info(perm+"1111");
             if (pathMatcher.match(perm, restfulPath)) {
+                log.info(perm,restfulPath);
                 List<String> roles = Convert.toList(String.class, permRoles.getValue());
+                log.info(String.valueOf(roles)+"2222");
                 authorizedRoles.addAll(Convert.toList(String.class, roles));
-                if (requireCheck == false) {
+                if (!requireCheck) {
                     requireCheck = true;
                 }
             }
@@ -93,11 +101,11 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
                 .map(GrantedAuthority::getAuthority)
                 .any(authority -> {
                     String roleCode = authority.substring(SecurityConstants.AUTHORITY_PREFIX.length()); // 用户的角色
-                    boolean hasAuthorized = CollectionUtil.isNotEmpty(authorizedRoles) && authorizedRoles.contains(roleCode);
-                    return hasAuthorized;
+                    return CollectionUtil.isNotEmpty(authorizedRoles) && authorizedRoles.contains(roleCode);
                 })
                 .map(AuthorizationDecision::new)
                 .defaultIfEmpty(new AuthorizationDecision(false));
+        log.info(String.valueOf(authorizationDecisionMono)+"3333");
         return authorizationDecisionMono;
     }
 
@@ -115,5 +123,4 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
         }
         return false;
     }
-
 }

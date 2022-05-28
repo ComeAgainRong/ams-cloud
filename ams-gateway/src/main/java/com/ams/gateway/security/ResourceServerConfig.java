@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author： AI码师 关注公众号"AI码师"获取完整源码
+ * @author： xr
  * @date： 2021/11/24
  * @description：
  * @modifiedBy：
@@ -42,8 +42,10 @@ public class ResourceServerConfig {
                 .anyExchange().access(resourceServerManager)
                 .and()
                 .exceptionHandling()
-                .accessDeniedHandler(accessDeniedHandler()) // 处理未授权
-                .authenticationEntryPoint(authenticationEntryPoint()) //处理未认证
+                // 处理未授权
+                .accessDeniedHandler(accessDeniedHandler())
+                //处理未认证
+                .authenticationEntryPoint(authenticationEntryPoint())
                 .and().csrf().disable();
         return http.build();
     }
@@ -53,11 +55,8 @@ public class ResourceServerConfig {
      */
     @Bean
     ServerAccessDeniedHandler accessDeniedHandler() {
-        return (exchange, denied) -> {
-            Mono<Void> mono = Mono.defer(() -> Mono.just(exchange.getResponse()))
-                    .flatMap(response -> ResponseUtils.writeErrorInfo(response, ResultCode.ACCESS_UNAUTHORIZED));
-            return mono;
-        };
+        return (exchange, denied) -> Mono.defer(() -> Mono.just(exchange.getResponse()))
+                .flatMap(response -> ResponseUtils.writeErrorInfo(response, ResultCode.ACCESS_UNAUTHORIZED));
     }
 
     /**
@@ -65,11 +64,8 @@ public class ResourceServerConfig {
      */
     @Bean
     ServerAuthenticationEntryPoint authenticationEntryPoint() {
-        return (exchange, e) -> {
-            Mono<Void> mono = Mono.defer(() -> Mono.just(exchange.getResponse()))
-                    .flatMap(response -> ResponseUtils.writeErrorInfo(response, ResultCode.TOKEN_INVALID_OR_EXPIRED));
-            return mono;
-        };
+        return (exchange, e) -> Mono.defer(() -> Mono.just(exchange.getResponse()))
+                .flatMap(response -> ResponseUtils.writeErrorInfo(response, ResultCode.TOKEN_INVALID_OR_EXPIRED));
     }
 
     @Bean
