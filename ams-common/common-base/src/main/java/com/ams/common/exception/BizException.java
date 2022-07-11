@@ -1,8 +1,10 @@
-package com.ams.common.web.exception;
+package com.ams.common.exception;
 
 import com.ams.common.result.IResultCode;
 import lombok.Getter;
-
+/**
+ * @author： 乐哥聊编程(全平台同号)
+ */
 @Getter
 public class BizException extends RuntimeException {
 

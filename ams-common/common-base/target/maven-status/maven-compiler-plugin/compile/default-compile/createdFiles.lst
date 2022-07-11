@@ -1,6 +1,8 @@
 com\ams\common\result\IResultCode.class
-com\ams\common\result\R.class
 com\ams\common\constan\SecurityConstants.class
 com\ams\common\constan\GlobalConstants.class
+com\ams\common\exception\BizException.class
+com\ams\common\result\R.class
+com\ams\common\utils\AssertUtil.class
 com\ams\common\result\ResultCode.class
 com\ams\common\constan\RedisConstants.class

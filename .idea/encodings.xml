@@ -6,9 +6,15 @@
     <file url="file://$PROJECT_DIR$/ams-common/common-mybatis-plus/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams-common/common-redis/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams-common/common-web/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams-common/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams-common/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams-gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams_admin/admin-boot/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams_admin/admin_api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams_admin/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams_admin/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

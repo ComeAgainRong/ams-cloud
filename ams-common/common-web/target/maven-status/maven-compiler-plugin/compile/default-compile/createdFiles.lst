@@ -1,3 +1,2 @@
 com\ams\common\web\exception\GlobalExceptionHandler.class
 com\ams\common\web\config\FeignConfig.class
-com\ams\common\web\exception\BizException.class

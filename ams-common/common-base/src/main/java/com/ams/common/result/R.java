@@ -1,9 +1,11 @@
 package com.ams.common.result;
 
+import com.ams.common.entity.APage;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @ClassName : { R }
@@ -19,7 +21,7 @@ public class R<T> implements Serializable {
 
     private String msg;
 
-    private Integer total;
+    private Long total;
 
     public static <T> R<T> ok() {
         return ok(null);
@@ -33,14 +35,6 @@ public class R<T> implements Serializable {
         return result(rce, data);
     }
 
-    public static <T> R<T> ok(T data, Long total) {
-        R<T> result = new R<>();
-        result.setCode(ResultCode.SUCCESS.getCode());
-        result.setMsg(ResultCode.SUCCESS.getMsg());
-        result.setData(data);
-        result.setTotal(total.intValue());
-        return result;
-    }
 
 
 
@@ -83,5 +77,14 @@ public class R<T> implements Serializable {
 
     public static boolean isSuccess(R<?> result) {
         return result != null && ResultCode.SUCCESS.getCode().equals(result.getCode());
+    }
+
+    public static <T> R page(APage<T> page) {
+        R<List<T>> result = new R<>();
+        result.setCode(ResultCode.SUCCESS.getCode());
+        result.setData(page.getList());
+        result.setMsg(ResultCode.SUCCESS.getMsg());
+        result.setTotal(page.getTotal());
+        return result;
     }
 }

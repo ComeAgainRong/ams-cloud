@@ -1,6 +1,5 @@
 E:\XiaoRong\Project(back end)\ams-cloud\ams_admin\admin_api\src\main\java\com\ams\admin\dto\UserAuthDTO.java
 E:\XiaoRong\Project(back end)\ams-cloud\ams_admin\admin_api\src\main\java\com\ams\admin\api\OAuthClientFeignClient.java
 E:\XiaoRong\Project(back end)\ams-cloud\ams_admin\admin_api\src\main\java\com\ams\admin\dto\OAuth2ClientDTO.java
-E:\XiaoRong\Project(back end)\ams-cloud\ams_admin\admin_api\src\main\java\com\ams\admin\api\PasswdFeignClient.java
 E:\XiaoRong\Project(back end)\ams-cloud\ams_admin\admin_api\src\main\java\com\ams\admin\dto\RolePermissionDTO.java
 E:\XiaoRong\Project(back end)\ams-cloud\ams_admin\admin_api\src\main\java\com\ams\admin\api\UserFeignClient.java

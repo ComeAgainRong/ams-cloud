@@ -30,6 +30,7 @@
         <mysql.version>8.0.19</mysql.version>
         <druid.version>1.2.4</druid.version>
         <mybatis-plus.version>3.4.3</mybatis-plus.version>
+        <org.mapstruct>1.4.1.Final</org.mapstruct>
     </properties>
     <dependencies>
         <dependency>

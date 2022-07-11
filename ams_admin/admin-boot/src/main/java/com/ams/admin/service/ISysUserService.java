@@ -3,11 +3,19 @@ package com.ams.admin.service;
 
 import com.ams.admin.dto.UserAuthDTO;
 import com.ams.admin.pojo.entity.SysUser;
+import com.ams.admin.pojo.req.SaveUserReq;
+import com.ams.admin.pojo.req.UserListPageReq;
+import com.ams.admin.pojo.vo.SysUserVO;
+import com.ams.common.entity.APage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  *
- * @author： AI码师 关注公众号"AI码师"获取完整源码
+ * @author：whisper
  * @date： 2021/11/24
  * @description：
  * @modifiedBy：
@@ -24,4 +32,35 @@ public interface ISysUserService extends IService<SysUser> {
      */
     UserAuthDTO getByUsername(String username);
 
+    /**
+     * 创建用户
+     * @param req
+     */
+    void createUser(SaveUserReq req);
+
+    /**
+     * 用户详情
+     * @param userId
+     * @return
+     */
+    SysUserVO userDetail(Long userId);
+
+    /**
+     * 更新用户信息
+     * @param userReq
+     * @param userId
+     */
+    void updateUserInfo(SaveUserReq userReq, Long userId);
+
+    /**
+     * 批量删除用户
+     * @param userIds
+     */
+    void mulDeleteUsers(List<Long> userIds);
+
+    /**
+     * 用户列表分页
+     * @param req
+     */
+    APage<SysUserVO> listPage(UserListPageReq req);
 }
