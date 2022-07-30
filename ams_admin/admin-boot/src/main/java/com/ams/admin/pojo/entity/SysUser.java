@@ -18,7 +18,7 @@ import java.util.List;
  * @version: 1.0
  */
 @Data
-public class SysUser {
+public class SysUser extends BaseEntity{
 
     @TableId(type = IdType.AUTO)
     private Long id;

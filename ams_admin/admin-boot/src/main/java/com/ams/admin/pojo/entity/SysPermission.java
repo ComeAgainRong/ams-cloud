@@ -18,7 +18,7 @@ import java.util.List;
  */
 @Data
 @Accessors(chain = true)
-public class SysPermission {
+public class SysPermission  extends BaseEntity{
 
     @TableId(type = IdType.AUTO)
     private Long id;
@@ -29,8 +29,13 @@ public class SysPermission {
 
     private String urlPerm;
 
+    private String  btnSign;
+
+
     // 有权限的角色编号集合
     @TableField(exist = false)
     private List<String> roles;
+
+
 
 }

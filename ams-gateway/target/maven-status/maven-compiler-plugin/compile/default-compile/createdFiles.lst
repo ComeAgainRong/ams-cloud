@@ -1,7 +1,0 @@
-com\ams\gateway\util\ResponseUtils$1.class
-com\ams\gateway\security\ResourceServerManager.class
-com\ams\gateway\security\SecurityGlobalFilter.class
-com\ams\gateway\GatewayApp.class
-com\ams\gateway\security\ResourceServerConfig.class
-com\ams\gateway\util\UrlPatternUtils.class
-com\ams\gateway\util\ResponseUtils.class

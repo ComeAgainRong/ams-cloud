@@ -10,5 +10,7 @@ import lombok.Data;
  */
 @Data
 public class UserListPageReq extends PageReq {
+
     private String keyword;
+
 }

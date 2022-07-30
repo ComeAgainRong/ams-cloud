@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "admin",
+      "type": "com.ams.admin.config.AdminConfig",
+      "sourceType": "com.ams.admin.config.AdminConfig"
+    }
+  ],
+  "properties": [
+    {
+      "name": "admin.services",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "com.ams.admin.config.AdminConfig"
+    }
+  ],
+  "hints": []
+}

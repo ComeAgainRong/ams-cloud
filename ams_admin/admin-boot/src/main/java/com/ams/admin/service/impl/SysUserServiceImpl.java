@@ -15,10 +15,12 @@ import com.ams.common.constan.GlobalConstants;
 import com.ams.common.entity.APage;
 import com.ams.common.result.ResultCode;
 import com.ams.common.utils.AssertUtil;
+import com.ams.common.web.utils.UserContext;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,7 +45,10 @@ import java.util.stream.Collectors;
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements ISysUserService {
     private final PasswordEncoder passwordEncoder;
     private  final ISysUserRoleService userRoleService;
+    private final ISysRoleMenuService roleMenuService;
     private final AdminMapStruct adminMapStruct;
+    private final ISysRolePermissionService rolePermissionService;
+    private final ISysPermissionService permissionService;
     @Override
     public UserAuthDTO getByUsername(String username) {
         UserAuthDTO userAuthInfo = this.baseMapper.getByUsername(username);
@@ -86,6 +91,8 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         SysUser sysUser=new SysUser();
         BeanUtils.copyProperties(userReq,sysUser);
         lambdaUpdate().eq(SysUser::getId,userId).update(sysUser);
+        userRoleService.deleteByUserId(userId);
+        saveUserRoles(userReq.getRoleIds(),userId);
     }
 
     @Override
@@ -103,15 +110,52 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
         page.setCurrent(req.getPageNo());
         page.setSize(req.getPageSize());
         LambdaQueryChainWrapper<SysUser> lambdaQuery = lambdaQuery();
-        lambdaQuery.eq(SysUser::getStatus, GlobalConstants.STATUS_ON);
         if (StringUtils.isNoneBlank(req.getKeyword())) {
             lambdaQuery.like(SysUser::getUsername, req.getKeyword()).or().like(SysUser::getNickname, req.getKeyword());
         }
+        lambdaQuery.orderByDesc(SysUser::getCreateTime);
         baseMapper.selectPage(page, lambdaQuery.getWrapper());
         List<SysUser> records = page.getRecords();
         List<SysUserVO> sysUserVOS = adminMapStruct.sysUserToSysUserVO(records);
         return PageUtils.flush(page, sysUserVOS);
     }
+
+    @Override
+    public void updateStatus(Long userId, Integer status) {
+        lambdaUpdate().set(SysUser::getStatus,status).eq(SysUser::getId,userId).update();
+    }
+
+    @Override
+    public SysUserVO currentInfocurrentInfo() {
+        Long userId = UserContext.getCurrentUserId();
+        AssertUtil.notEmpty(userId,ResultCode.TOKEN_INVALID_OR_EXPIRED);
+        SysUserVO sysUserVO = userDetail(userId);
+        AssertUtil.notEmpty(sysUserVO,ResultCode.USER_NOT_EXIST);
+        //查询绑定的菜单
+        List<Long> roleIds = userRoleService.selectRoleIds(userId);
+        List<SysRoleMenu> roleMenus = roleMenuService.lambdaQuery().in(SysRoleMenu::getRoleId, roleIds).list();
+        sysUserVO.setMenuIds(roleMenus.stream().map(SysRoleMenu::getMenuId).collect(Collectors.toList()));
+        //获取权限
+        List<SysRolePermission> rolePermissions = rolePermissionService.lambdaQuery().in(SysRolePermission::getRoleId, roleIds).list();
+        sysUserVO.setPermissions(Arrays.asList());
+        if (CollectionUtil.isNotEmpty(rolePermissions)) {
+            List<Long> permissionIds = rolePermissions.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
+            List<SysPermission> sysPermissions = permissionService.lambdaQuery().in(SysPermission::getId, permissionIds).list();
+            if (CollectionUtil.isNotEmpty(sysPermissions)) {
+                List<String> btnSigns = sysPermissions.stream().map(SysPermission::getBtnSign).collect(Collectors.toList());
+                sysUserVO.setPermissions(btnSigns);
+            }
+        }
+        return sysUserVO;
+    }
+
+    @Override
+    public List<Long> selectUserRole(Long userId) {
+        List<SysUserRole> sysUserRoles = userRoleService.lambdaQuery().eq(SysUserRole::getUserId, userId).list();
+        List<Long> roleIds = sysUserRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+        return roleIds;
+    }
+
 
 
     private void saveUserRoles(List<Long> roleIds,Long userId) {

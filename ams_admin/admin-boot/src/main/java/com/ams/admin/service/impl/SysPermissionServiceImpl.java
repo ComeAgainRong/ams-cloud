@@ -2,19 +2,29 @@ package com.ams.admin.service.impl;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.util.StrUtil;
+import com.ams.admin.config.AdminConfig;
+import com.ams.admin.config.AdminMapStruct;
 import com.ams.admin.mapper.SysPermissionMapper;
 import com.ams.admin.pojo.entity.SysPermission;
+import com.ams.admin.pojo.entity.SysRolePermission;
+import com.ams.admin.pojo.req.CommonReq;
+import com.ams.admin.pojo.req.SavePermissionReq;
+import com.ams.admin.pojo.vo.SysPermissionVO;
+import com.ams.admin.pojo.vo.SysServiceVO;
 import com.ams.admin.service.ISysPermissionService;
+import com.ams.admin.service.ISysRolePermissionService;
 import com.ams.common.constan.GlobalConstants;
+import com.ams.common.result.ResultCode;
+import com.ams.common.utils.AssertUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -32,6 +42,10 @@ import java.util.stream.Collectors;
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements ISysPermissionService {
 
     private final RedisTemplate redisTemplate;
+    private final AdminMapStruct adminMapStruct;
+    private final AdminConfig adminConfig;
+
+    private final ISysRolePermissionService rolePermissionService;
 
     /**
      * 首先 先删除redis中本用户角色权限
@@ -64,4 +78,64 @@ public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, S
     public List<SysPermission> listPermRoles() {
         return this.baseMapper.listPermRoles();
     }
+
+    @Override
+    public List<SysPermissionVO> listByMenuId(Long menuId) {
+        List<SysPermission> list = lambdaQuery().eq(SysPermission::getMenuId, menuId).list();
+        if(CollectionUtil.isNotEmpty(list)){
+            return adminMapStruct.sysPermissionToPermissionVO(list);
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public void createPermission(SavePermissionReq req) {
+        SysPermission sysPermission = new SysPermission();
+        BeanUtils.copyProperties(req, sysPermission);
+        String urlPerm= String.format(GlobalConstants.ADMIN_URL_PERM, req.getMethod(),req.getServiceName(),req.getUrl());
+        sysPermission.setUrlPerm(urlPerm);
+        save(sysPermission);
+    }
+
+    @Override
+    public void updatePermission(SavePermissionReq req) {
+        AssertUtil.notEmpty(req.getId(), ResultCode.PARAM_VALID_FAIL);
+        SysPermission sysPermission = new SysPermission();
+        BeanUtils.copyProperties(req, sysPermission);
+        String urlPerm= String.format(GlobalConstants.ADMIN_URL_PERM, req.getMethod(),req.getServiceName(),req.getUrl());
+        sysPermission.setUrlPerm(urlPerm);
+        updateById(sysPermission);
+    }
+
+    @Override
+    public List<SysServiceVO> getService() {
+        List<String> services = adminConfig.getServices();
+        if (CollectionUtil.isNotEmpty(services)) {
+            List<String> validServices = services.stream().filter(service -> service.split(",").length == 2).collect(Collectors.toList());
+            return validServices.stream().map(service -> {
+                String[] nameCode = service.split(",");
+                SysServiceVO sysServiceVO = new SysServiceVO();
+                sysServiceVO.setServiceCode(nameCode[0]);
+                sysServiceVO.setServiceName(nameCode[1]);
+                return sysServiceVO;
+            }).collect(Collectors.toList());
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+    @Override
+    public void detelePermission(List<Long> ids) {
+        this.baseMapper.deleteBatchIds(ids);
+    }
+
+    @Override
+    public List<Long> listRolePermission(Long roleId) {
+        List<SysRolePermission> list = rolePermissionService.lambdaQuery().eq(SysRolePermission::getRoleId, roleId).list();
+        if(CollectionUtil.isNotEmpty(list)){
+            return  list.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
+        }
+        return Collections.EMPTY_LIST;
+    }
+
+
 }

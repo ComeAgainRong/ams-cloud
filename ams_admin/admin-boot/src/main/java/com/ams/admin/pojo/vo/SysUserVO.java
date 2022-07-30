@@ -36,7 +36,10 @@ public class SysUserVO {
 
     private Integer status;
 
+
+    private List<Long> menuIds;
     private List<Long> roleIds;
+    private List<String> permissions;
 
 
 

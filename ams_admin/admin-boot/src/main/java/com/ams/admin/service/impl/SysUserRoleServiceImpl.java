@@ -35,4 +35,9 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
         }
         return Collections.EMPTY_LIST;
     }
+
+    @Override
+    public void deleteByUserId(Long userId) {
+        this.baseMapper.delete(lambdaQuery().eq(SysUserRole::getUserId,userId).getWrapper());
+    }
 }

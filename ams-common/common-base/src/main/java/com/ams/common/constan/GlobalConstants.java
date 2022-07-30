@@ -13,4 +13,6 @@ public interface GlobalConstants {
 
     //user 默认密码
     String USER_DEFAULT_PASSWORD="123456";
+    Long ROOT_MENU_ID = -1L;
+    String ADMIN_URL_PERM = "%s:/%s%s";
 }

@@ -20,4 +20,24 @@ public class SysRoleVO {
      * 角色名称
      */
     private String name;
+
+    /**
+     * 角色编码
+     */
+    private String code;
+
+    /**
+     * 显示顺序
+     */
+    private Integer sort;
+
+    /**
+     * 角色状态：0-正常；1-停用
+     */
+    private int status;
+
+    /**
+     * 逻辑删除标识：0-未删除；1-已删除
+     */
+    private int deleted;
 }

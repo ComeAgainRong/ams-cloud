@@ -14,6 +14,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 public enum ResultCode implements IResultCode,Serializable {
     SUCCESS("000000", "成功"),
+    PARAM_VALID_FAIL("000001", "参数校验不通过"),
+    DATE_NOT_FOUND("000002", "数据为空"),
     SYSTEM_EXECUTION_ERROR("999999", "系统执行出错"),
     USERNAME_OR_PASSWORD_ERROR("A00100", "用户名或密码错误"),
     USER_NOT_EXIST("A00101", "用户不存在"),
@@ -24,6 +26,7 @@ public enum ResultCode implements IResultCode,Serializable {
     FLOW_LIMITING("B0210", "系统限流"),
     DEGRADATION("B0220", "系统功能降级"),
     SERVICE_NO_AUTHORITY("B0221", "服务未授权"),
+
     ;
 
     @Override

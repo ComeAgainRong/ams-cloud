@@ -11,8 +11,20 @@ import java.util.List;
  */
 @Data
 public class APage<T> {
+    /**
+     * 条数
+     */
     private Long total;
+    /**
+     * 页数
+     */
     private Long pageNo;
+    /**
+     * 页面条数
+     */
     private Long pageSize;
+    /**
+     * 数据
+     */
     private List<T> list;
 }

@@ -1,11 +1,12 @@
 package com.ams.admin.pojo.entity;
 
+
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @description 角色表
@@ -13,10 +14,11 @@ import java.util.Date;
  * @date 2022-07-10
  */
 @Data
-public class SysRole implements Serializable {
+public class SysRole extends  BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @TableId(type = IdType.AUTO)
     /**
     * id
     */
@@ -45,27 +47,9 @@ public class SysRole implements Serializable {
     /**
     * 逻辑删除标识：0-未删除；1-已删除
     */
+    @TableLogic(value = "0",delval = "1")
     private int deleted;
 
-    /**
-    * 创建时间
-    */
-    private Date createTime;
-
-    /**
-    * 更新时间
-    */
-    private Date updateTime;
-
-    /**
-    * 更新者
-    */
-    private String updateBy;
-
-    /**
-    * 创建者
-    */
-    private String createBy;
 
     public SysRole() {}
 }

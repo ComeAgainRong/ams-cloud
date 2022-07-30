@@ -26,4 +26,10 @@ public interface ISysUserRoleService extends IService<SysUserRole> {
      * @return
      */
     List<Long> selectRoleIds(Long userId);
+
+
+    /**
+     * 删除该用户绑定的角色
+     */
+     void  deleteByUserId(Long userId);
 }

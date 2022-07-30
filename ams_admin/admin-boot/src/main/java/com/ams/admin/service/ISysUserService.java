@@ -63,4 +63,27 @@ public interface ISysUserService extends IService<SysUser> {
      * @param req
      */
     APage<SysUserVO> listPage(UserListPageReq req);
+
+
+
+    /**
+     * 更新用户状态
+     */
+    void updateStatus(Long userId, Integer status);
+
+    /**
+     * 获取当前用户信息
+     * @return
+     */
+    SysUserVO currentInfocurrentInfo();
+
+    /**
+     * 查询用户绑定的角色
+     * @param userId 角色id
+     * @return long
+     */
+    List<Long> selectUserRole(Long userId);
+
+
+
 }
