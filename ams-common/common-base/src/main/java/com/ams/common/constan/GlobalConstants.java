@@ -8,6 +8,7 @@ package com.ams.common.constan;
 public interface GlobalConstants {
 
     String URL_PERM_ROLES_KEY = "system:perm_roles_rule:url:";
+    String ROLE_SELECT="roleLists";
     Integer STATUS_ON=1;
     Integer STATUS_OFF=0;
 

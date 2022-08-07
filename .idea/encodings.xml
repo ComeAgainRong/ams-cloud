@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$/ams-auth/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams-common/common-base/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams-common/common-base/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams-common/common-mybatis-plus/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams-common/common-redis/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams-common/common-web/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams-common/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams-gateway/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams_admin/admin-boot/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/ams_admin/admin_api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams_admin/admin_api/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams_admin/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/ams_admin/src/main/resources" charset="UTF-8" />

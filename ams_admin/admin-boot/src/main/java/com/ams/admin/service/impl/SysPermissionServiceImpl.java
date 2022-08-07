@@ -20,6 +20,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -38,14 +39,19 @@ import java.util.stream.Collectors;
  * @version: 1.0
  */
 @Service
-@RequiredArgsConstructor
 public class SysPermissionServiceImpl extends ServiceImpl<SysPermissionMapper, SysPermission> implements ISysPermissionService {
 
-    private final RedisTemplate redisTemplate;
-    private final AdminMapStruct adminMapStruct;
-    private final AdminConfig adminConfig;
+    @Autowired
+    private  RedisTemplate redisTemplate;
 
-    private final ISysRolePermissionService rolePermissionService;
+    @Autowired
+    private  AdminMapStruct adminMapStruct;
+
+    @Autowired
+    private  AdminConfig adminConfig;
+
+    @Autowired
+    private  ISysRolePermissionService rolePermissionService;
 
     /**
      * 首先 先删除redis中本用户角色权限

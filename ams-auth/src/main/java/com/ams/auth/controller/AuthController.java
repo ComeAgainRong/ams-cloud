@@ -3,6 +3,7 @@ package com.ams.auth.controller;
 import com.ams.common.result.R;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -36,6 +37,7 @@ public class AuthController {
     private final TokenEndpoint tokenEndpoint;
 
 
+    @ApiOperation("登录")
     @PostMapping("/token")
     public Object postAccessToken(
             Principal principal,

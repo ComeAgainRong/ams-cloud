@@ -2,6 +2,7 @@ package com.ams.admin.componet.listener;
 
 import com.ams.admin.service.ISysPermissionService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +14,9 @@ import org.springframework.stereotype.Component;
  * 初始化角色权限
  */
 @Component
-@AllArgsConstructor
 public class InitResourcePermissionCache implements CommandLineRunner {
 
+    @Autowired
     private ISysPermissionService iSysPermissionService;
 
     @Override

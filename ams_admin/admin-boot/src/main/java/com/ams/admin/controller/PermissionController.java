@@ -7,6 +7,8 @@ import com.ams.admin.pojo.vo.SysServiceVO;
 import com.ams.admin.service.ISysPermissionService;
 import com.ams.admin.service.ISysRolePermissionService;
 import com.ams.common.result.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +21,7 @@ import java.util.List;
  * @Author : {whisper}
  * @Date : {Created in 15:03 2022/2/2}
  */
+@Api(tags = "权限管理")
 @RestController
 @RequestMapping("/permission")
 @Slf4j
@@ -32,6 +35,7 @@ public class PermissionController {
     /**
      * 权限列表
      */
+    @ApiOperation("权限列表")
     @GetMapping("/list/{menuId}")
     public R<List<SysPermissionVO>> list(@PathVariable Long menuId) {
         List<SysPermissionVO> permissionVOS = permissionService.listByMenuId(menuId);
@@ -41,6 +45,7 @@ public class PermissionController {
     /**
      * 新增权限
      */
+    @ApiOperation("新增权限")
     @PostMapping()
     public R createPermission(@Validated @RequestBody SavePermissionReq req) {
         permissionService.createPermission(req);
@@ -51,6 +56,7 @@ public class PermissionController {
     /**
      * 更新权限信息
      */
+    @ApiOperation("更新权限信息")
     @PutMapping()
     public R updatePermission(@Validated @RequestBody SavePermissionReq req) {
         permissionService.updatePermission(req);
@@ -60,6 +66,7 @@ public class PermissionController {
     /**
      * 获取服务列表
      */
+    @ApiOperation("获取服务列表")
     @GetMapping("/services")
     public R<List<SysServiceVO>> getServices() {
         List<SysServiceVO> sysServiceVOS = permissionService.getService();
@@ -70,6 +77,7 @@ public class PermissionController {
     /**
      * 删除权限
      */
+    @ApiOperation("删除权限")
     @DeleteMapping("/{ids}")
     public R detelePermission(@PathVariable List<Long> ids) {
         permissionService.detelePermission(ids);
@@ -79,6 +87,7 @@ public class PermissionController {
     /**
      * 查询角色绑定的权限
      */
+    @ApiOperation("查询角色绑定的权限")
     @GetMapping("/role/{roleId}")
     public R<List<Long>> listRolePermission(@PathVariable Long roleId) {
         List<Long> permissions = permissionService.listRolePermission(roleId);
@@ -87,6 +96,7 @@ public class PermissionController {
     /**
      * 更新角色绑定的权限
      */
+    @ApiOperation("更新角色绑定的权限")
     @PutMapping("/role/{roleId}")
     public R<List<Long>> updateRolePermission(@PathVariable Long roleId,@RequestBody CommonReq req){
         rolePermissionService.updateRolePermission(roleId,req);

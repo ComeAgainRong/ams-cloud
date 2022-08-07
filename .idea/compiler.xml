@@ -19,16 +19,16 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="admin-boot" options="" />
-      <module name="admin_api" options="" />
-      <module name="ams-auth" options="" />
+      <module name="admin-boot" options="-parameters" />
+      <module name="admin_api" options="-parameters" />
+      <module name="ams-auth" options="-parameters" />
       <module name="ams-common" options="" />
-      <module name="ams-gateway" options="" />
+      <module name="ams-gateway" options="-parameters" />
       <module name="ams_admin" options="" />
-      <module name="common-base" options="" />
-      <module name="common-mybatis-plus" options="" />
-      <module name="common-redis" options="" />
-      <module name="common-web" options="" />
+      <module name="common-base" options="-parameters" />
+      <module name="common-mybatis-plus" options="-parameters" />
+      <module name="common-redis" options="-parameters" />
+      <module name="common-web" options="-parameters" />
     </option>
   </component>
 </project>

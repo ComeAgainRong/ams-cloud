@@ -38,7 +38,6 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "security")
 public class ResourceServerManager implements ReactiveAuthorizationManager<AuthorizationContext> {
     private final RedisTemplate redisTemplate;
-
     @Setter
     private List<String> ignoreUrls;
 
@@ -61,7 +60,7 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
         // 如果token为空 或者token不合法 则进行拦截
         // RESTFul接口权限设计 @link https://www.cnblogs.com/haoxianrui/p/14961707.html
         String restfulPath = method + ":" + path;
-
+        log.info("gateway restfulPath:{}",restfulPath);
         String token = request.getHeaders().getFirst(SecurityConstants.AUTHORIZATION_KEY);
         if (StrUtil.isBlank(token) || !StrUtil.startWithIgnoreCase(token, SecurityConstants.JWT_PREFIX)) {
             return Mono.just(new AuthorizationDecision(false));
@@ -77,21 +76,21 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
         // 获取当前资源 所需要的角色
         for (Map.Entry<String, Object> permRoles : urlPermRolesRules.entrySet()) {
             String perm = permRoles.getKey();
-            log.info(perm+"1111");
+            log.info("perm the log => {}::",perm);
             if (pathMatcher.match(perm, restfulPath)) {
-                log.info(perm,restfulPath);
+                log.info(restfulPath);
                 List<String> roles = Convert.toList(String.class, permRoles.getValue());
-                log.info(String.valueOf(roles)+"2222");
                 authorizedRoles.addAll(Convert.toList(String.class, roles));
-                if (!requireCheck) {
+                if (requireCheck ==false){
                     requireCheck = true;
                 }
+                log.info("roleList the log => {}:",authorizedRoles);
             }
         }
 
         // 如果资源不需要权限 则直接返回授权成功
-        if (!requireCheck) {
-            return Mono.just(new AuthorizationDecision(true));
+        if (requireCheck==false){
+            return Mono.just(new AuthorizationDecision(false));
         }
 
         // 判断JWT中携带的用户角色是否有权限访问
@@ -101,11 +100,21 @@ public class ResourceServerManager implements ReactiveAuthorizationManager<Autho
                 .map(GrantedAuthority::getAuthority)
                 .any(authority -> {
                     String roleCode = authority.substring(SecurityConstants.AUTHORITY_PREFIX.length()); // 用户的角色
-                    return CollectionUtil.isNotEmpty(authorizedRoles) && authorizedRoles.contains(roleCode);
+                    boolean hasAuthorized = CollectionUtil.isNotEmpty(authorizedRoles) && authorizedRoles.contains(roleCode);
+
+                    //当前用户角色
+                    log.info("The current user role the log => {}:",roleCode);
+                    //判断是否有这个角色
+                    log.info("Determine whether there is the role the log => {}:",hasAuthorized);
+                    //获取出的角色
+                    log.info("Get out of the role the log => {}:",authorizedRoles);
+                    if (hasAuthorized) {
+                        System.out.println(hasAuthorized+"hasAuthorizedhasAuthorized");
+                    }
+                    return hasAuthorized;
                 })
                 .map(AuthorizationDecision::new)
                 .defaultIfEmpty(new AuthorizationDecision(false));
-        log.info(String.valueOf(authorizationDecisionMono)+"3333");
         return authorizationDecisionMono;
     }
 

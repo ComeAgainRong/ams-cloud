@@ -8,6 +8,8 @@ import com.ams.admin.pojo.vo.SysRoleVO;
 import com.ams.admin.service.ISysMenuService;
 import com.ams.admin.service.ISysRoleService;
 import com.ams.common.result.R;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,7 @@ import java.util.List;
 @RequestMapping("/menu")
 @Slf4j
 @RequiredArgsConstructor
+@Api(tags = "菜单管理")
 public class MenuController {
 
     private  final ISysMenuService menuService;
@@ -32,6 +35,7 @@ public class MenuController {
     /**
      * 菜单列表
      */
+    @ApiOperation("菜单列表")
     @GetMapping("/list")
     public R<List<SysMenuVO>> getMenuList(){
         List<SysMenuVO> sysMenuVOS = menuService.loadMenus();
@@ -41,6 +45,7 @@ public class MenuController {
     /**
      * 创建菜单
      */
+    @ApiOperation("创建菜单")
     @PostMapping
     public R createMenu(@Validated  @RequestBody SaveMenuReq req){
         menuService.createMenu(req);
@@ -49,6 +54,7 @@ public class MenuController {
     /**
      * 菜单树
      */
+    @ApiOperation("菜单树")
     @GetMapping("/listTree")
     public R<List<SysMenuVO>> listTree(){
       List<SysMenuVO> menuVOS= menuService.lisTree();
@@ -57,6 +63,7 @@ public class MenuController {
     /**
      * 更新菜单
      */
+    @ApiOperation("更新菜单")
     @PutMapping
     public R updateMenu(@Validated  @RequestBody SaveMenuReq req){
         menuService.updateMenu(req);
@@ -65,6 +72,7 @@ public class MenuController {
     /**
      * 删除菜单
      */
+    @ApiOperation("删除菜单")
     @DeleteMapping("/{ids}")
     public R deletes(@PathVariable List<Long> ids){
         menuService.deletes(ids);
@@ -73,6 +81,7 @@ public class MenuController {
     /**
      * 菜单select
      */
+    @ApiOperation("菜单select")
     @GetMapping("/select/{status}")
     public R<List<SysMenuSelectVO>> select(@PathVariable  int status) {
        List<SysMenuSelectVO> selectVOS = menuService.select(status);
@@ -82,6 +91,7 @@ public class MenuController {
     /**
      * 菜单详情
      */
+    @ApiOperation("菜单详情")
     @GetMapping("/{id}")
     public  R<SysMenuVO> getDetail(@PathVariable Long id){
         SysMenuVO sysMenuVO = menuService.getDetail(id);
@@ -90,6 +100,7 @@ public class MenuController {
     /**
      *  查询角色绑定的菜单
      */
+    @ApiOperation("查询角色绑定的菜单")
     @GetMapping("/role/{roleId}")
     public R<List<Long>> listRoleMenu(@PathVariable Long roleId){
         List<Long>  menuId =  menuService.listRoleMenu(roleId);
@@ -99,6 +110,7 @@ public class MenuController {
     /**
      * 更新角色绑定的菜单
      */
+    @ApiOperation("更新角色绑定的菜单")
     @PutMapping("/role/{roleId}")
     public R<List<Long>> updateRoleMenu(@PathVariable Long roleId,@RequestBody CommonReq req){
         menuService.updateRoleMenu(roleId,req);
@@ -107,7 +119,7 @@ public class MenuController {
     /**
      * 获取当前用户绑定的菜单
      */
-
+    @ApiOperation("获取当前用户绑定的菜单")
     @GetMapping("/currentUser")
     public R<List<Long>> currentUser(){
         List<Long> menus = menuService.currentUser();

@@ -9,6 +9,8 @@ import com.ams.common.entity.APage;
 import com.ams.common.result.R;
 import com.ams.common.web.utils.UserContext;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -24,6 +26,7 @@ import java.util.List;
  * @Author : {whisper}
  * @Date : {Created in 15:03 2022/2/2}
  */
+@Api(tags = "用户管理")
 @RestController
 @RequestMapping(value = {"/api/v1/users","/user"})
 @Slf4j
@@ -34,10 +37,11 @@ public class UserController {
     private final ISysUserService sysUserService;
 
     /**
-     * 获取用户信息
+     * 根据用户名获取用户信息
      * @param username
      * @return
      */
+    @ApiOperation("根据用户名获取用户信息")
     @GetMapping("/username/{username}")
     public R<UserAuthDTO> getUserByUsername(@NotBlank(message = "username 不能为空") @PathVariable String username){
         UserAuthDTO user = sysUserService.getByUsername(username);
@@ -46,6 +50,7 @@ public class UserController {
     /**
      * 创建用户
      */
+    @ApiOperation("创建用户")
     @PostMapping
     public R createUser(@Validated @RequestBody SaveUserReq req){
         sysUserService.createUser(req);
@@ -55,6 +60,7 @@ public class UserController {
     /**
      * 用户详情
      */
+    @ApiOperation("用户详情")
     @GetMapping("/{userId}")
     public R<SysUserVO> userDetail(@NotNull(message = "userId 不能为空") @PathVariable Long userId){
      SysUserVO sysUserVO= sysUserService.userDetail(userId);
@@ -64,6 +70,7 @@ public class UserController {
     /**
      * 更新用户
      */
+    @ApiOperation("更新用户")
     @PutMapping("/{userId}")
     public R updateUserInfo(@Validated @RequestBody SaveUserReq userReq,@NotNull(message = "userId 不能为空") @PathVariable Long userId){
         sysUserService.updateUserInfo(userReq,userId);
@@ -72,6 +79,7 @@ public class UserController {
     /**
      * 批量删除用户
      */
+    @ApiOperation("批量删除用户")
     @DeleteMapping("/{userIds}")
     public R mulDeleteUsers(@Size(min = 1,message = "userIds 不能为空") @PathVariable List<Long> userIds){
         sysUserService.mulDeleteUsers(userIds);
@@ -81,6 +89,7 @@ public class UserController {
     /**
      * 用户分页列表
      */
+    @ApiOperation("用户分页列表")
     @PostMapping("/listPage")
     public R<List<SysUserVO>> listPage( @RequestBody UserListPageReq req){
         APage<SysUserVO> sysUserVOAPage = sysUserService.listPage(req);
@@ -89,6 +98,7 @@ public class UserController {
     /**
      * 更新用户状态
      */
+    @ApiOperation("更新用户状态")
     @PostMapping("/updateStatus/{userId}/{status}")
     public R updateStatus(@NotNull(message = "userId 不能为空") @PathVariable Long userId,@NotNull(message = "status 不能为空") @PathVariable Integer status){
         sysUserService.updateStatus(userId,status);
@@ -98,6 +108,7 @@ public class UserController {
     /**
      * 获取当前用户信息
      */
+    @ApiOperation("获取当前用户信息")
     @GetMapping("/current")
     public R<SysUserVO> currentInfo(){
         SysUserVO sysUserVO= sysUserService.currentInfocurrentInfo();
@@ -107,6 +118,7 @@ public class UserController {
     /**
      * 查询户绑定的角色
      */
+    @ApiOperation("查询户绑定的角色")
     @GetMapping("/selectUserRole/{userId}")
     public R selectUserRole(@PathVariable Long userId){
        List<Long> roleId = sysUserService.selectUserRole(userId);
